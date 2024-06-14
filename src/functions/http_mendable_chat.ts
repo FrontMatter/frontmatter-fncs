@@ -5,8 +5,9 @@ import {
   InvocationContext,
 } from "@azure/functions";
 import { createClient } from "@supabase/supabase-js";
+import { MendableChatResponse } from "../models/MendableChatResponse";
 
-export async function http_ai_chat(
+export async function http_mendable_chat(
   request: HttpRequest,
   __: InvocationContext
 ): Promise<HttpResponseInit> {
@@ -66,6 +67,7 @@ export async function http_ai_chat(
       question: chatData.question,
       history: [{ prompt: "", response: "", sources: [] }],
       conversation_id: chatData.chatId,
+      shouldStream: false,
     }),
   });
 
@@ -80,30 +82,15 @@ export async function http_ai_chat(
   };
 
   try {
-    // TODO: Fix the chunking
-    const body = await response.text();
-    for await (const chunk of body) {
-      try {
-        let chunkString = chunk.toString();
-        if (chunkString.startsWith("data: ")) {
-          chunkString = chunkString.substring(6);
-        }
-        const chunkData = JSON.parse(chunkString);
+    const responseData: MendableChatResponse = await response.json();
 
-        if (chunkData.chunk === "<|source|>" && chunkData.metadata) {
-          const metadata =
-            chunkData.metadata.map((m: any) => m.link) || ([] as string[]);
-          data.sources = metadata;
-        } else if (chunkData.chunk === "<|message_id|>" && chunkData.metadata) {
-          data.answerId = chunkData.metadata;
-        } else {
-          data.answer += chunkData.chunk;
-        }
-      } catch (e) {
-        // noop
-      }
-    }
-  } catch (err) {}
+    data.answer = responseData.answer.text;
+    data.answerId = responseData.message_id;
+    data.sources = responseData.sources.map((s) => s.link);
+  } catch (err) {
+    console.log(err.message);
+    // noop
+  }
 
   return {
     status: 200,
@@ -112,7 +99,7 @@ export async function http_ai_chat(
 }
 
 app.http("ai-chat", {
-  methods: ["GET", "POST"],
+  methods: ["POST"],
   authLevel: "anonymous",
-  handler: http_ai_chat,
+  handler: http_mendable_chat,
 });

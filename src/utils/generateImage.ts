@@ -24,7 +24,7 @@ const mockData = {
   },
 };
 
-const generateImage = async (
+export const generateImage = async (
   sponsors: (typeof mockData)["data"]["viewer"]["sponsors"]["edges"][0]["node"][]
 ) => {
   if (!sponsors) {

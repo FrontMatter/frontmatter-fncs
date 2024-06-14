@@ -6,7 +6,7 @@ import {
 } from "@azure/functions";
 import { NewConversationResponse } from "../models/NewConversationResponse";
 
-export async function http_ai_init(
+export async function http_mendable_init(
   _: HttpRequest,
   __: InvocationContext
 ): Promise<HttpResponseInit> {
@@ -55,5 +55,5 @@ export async function http_ai_init(
 app.http("ai-init", {
   methods: ["GET"],
   authLevel: "anonymous",
-  handler: http_ai_init,
+  handler: http_mendable_init,
 });

@@ -4,6 +4,7 @@ import {
   HttpResponseInit,
   InvocationContext,
 } from "@azure/functions";
+import { generateImage } from "../utils/generateImage";
 
 export async function http_sponsor_images(
   _: HttpRequest,
@@ -49,6 +50,7 @@ export async function http_sponsor_images(
     const data = await response.json();
     sponsors = data.data.viewer.sponsors.edges.map((edge: any) => edge.node);
   }
+  console.log(sponsors);
 
   const ocResponse = await fetch(
     `https://opencollective.com/frontmatter/members.json`

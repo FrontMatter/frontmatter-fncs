@@ -1,0 +1,85 @@
+##########
+### AI ###
+##########
+
+### Get AI title suggestions
+
+POST http://localhost:7071/api/ai-title HTTP/1.1
+content-type: application/json
+
+{
+  "title": "How to get started?",
+  "token": "<github token>",
+  "nrOfCharacters": 60
+}
+
+#############
+### Stars ###
+#############
+
+### Get stars
+
+GET http://localhost:7071/api/stars HTTP/1.1
+
+##################
+### Supporters ###
+##################
+
+### Check if user is a supporter
+
+GET http://localhost:7071/api/backers?backer=estruyf HTTP/1.1
+
+### Check by using the token
+
+POST http://localhost:7071/api/v2/backers HTTP/1.1
+content-type: application/json
+
+{
+  "token": "<github token>"
+}
+
+### Get sponsors
+
+GET http://localhost:7071/api/sponsors HTTP/1.1
+
+### Get sponsors image
+
+GET http://localhost:7071/api/img-sponsors HTTP/1.1
+
+########################
+### Mendable Chatbot ###
+########################
+
+### Init
+
+GET http://localhost:7071/api/ai-init HTTP/1.1
+
+### Chat
+
+POST http://localhost:7071/api/ai-chat HTTP/1.1
+content-type: application/json
+
+{
+  "chatId": "2436209",
+  "question": "How to get started?"
+}
+
+### Feedback
+
+POST http://localhost:7071/api/ai-feedback HTTP/1.1
+content-type: application/json
+
+{
+  "answerId": "4527447",
+  "vote": 1
+}
+
+### AI Title
+
+POST http://localhost:7071/api/ai-feedback HTTP/1.1
+content-type: application/json
+
+{
+  "answerId": "4527447",
+  "vote": 1
+}

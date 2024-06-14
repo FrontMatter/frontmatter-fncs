@@ -5,7 +5,7 @@ import {
   InvocationContext,
 } from "@azure/functions";
 
-export async function http_ai_feedback(
+export async function http_mendable_feedback(
   request: HttpRequest,
   __: InvocationContext
 ): Promise<HttpResponseInit> {
@@ -41,5 +41,5 @@ export async function http_ai_feedback(
 app.http("ai-feedback", {
   methods: ["POST"],
   authLevel: "anonymous",
-  handler: http_ai_feedback,
+  handler: http_mendable_feedback,
 });
