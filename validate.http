@@ -8,8 +8,41 @@ POST http://localhost:7071/api/ai-title HTTP/1.1
 content-type: application/json
 
 {
-  "title": "How to get started?",
   "token": "<github token>",
+  "title": "How to get started?",
+  "nrOfCharacters": 60
+}
+
+### Get AI description suggestions
+
+POST http://localhost:7071/api/ai/description HTTP/1.1
+
+{
+  "token": "<github token>",
+  "title": "How to get started?",
+  "content": "This is a test content",
+  "nrOfCharacters": 160
+}
+
+### Get AI taxonomy suggestions
+
+POST http://localhost:7071/api/ai/taxonomy HTTP/1.1
+
+{
+  "token": "<github token>",
+  "title": "How to get started?",
+  "description": "Learn how to get started and succeed with our helpful tips and advice. Discover the best ways to begin your journey towards success.",
+  "taxonomy": ["getting-started", "tips", "advice"],
+  "type": "tags"
+}
+
+### Get AI taxonomy suggestions
+
+POST http://localhost:7071/api/ai/title HTTP/1.1
+
+{
+  "token": "<github token>",
+  "title": "How to get started?",
   "nrOfCharacters": 60
 }
 
