@@ -45,7 +45,7 @@ export async function http_stars(
   };
 }
 
-app.http("http_stars", {
+app.http("stars", {
   methods: ["GET"],
   authLevel: "anonymous",
   handler: http_stars,
