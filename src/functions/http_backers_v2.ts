@@ -32,7 +32,7 @@ export async function http_backers_v2(
   if (allBackers.includes(username)) {
     return {
       status: 200,
-      body: `Thanks for your support ${username}!`,
+      body: `Thanks for your support ${username}! 🎉👏🏼`,
     };
   }
 
@@ -41,7 +41,7 @@ export async function http_backers_v2(
   if (sponsor) {
     return {
       status: 200,
-      body: `Thanks for your support ${username}!`,
+      body: `Thanks for your support ${username}! 🎉👏🏼`,
     };
   }
 
