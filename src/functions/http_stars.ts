@@ -6,9 +6,11 @@ import {
 } from "@azure/functions";
 
 export async function http_stars(
-  _: HttpRequest,
+  request: HttpRequest,
   __: InvocationContext
 ): Promise<HttpResponseInit> {
+  const { query } = request;
+
   if (!process.env.GITHUB_AUTH) {
     return {
       status: 401,
@@ -21,8 +23,16 @@ export async function http_stars(
     "user-agent": "frontmatter",
   };
 
+  let apiUrl = "https://api.github.com/repos/estruyf/vscode-front-matter";
+  if (query.has(`repo`)) {
+    const repo = query.get(`repo`);
+    if (repo.includes("vscode-demo-time")) {
+      apiUrl = `https://api.github.com/repos/${repo}`; 
+    }
+  }
+
   const response = await fetch(
-    `https://api.github.com/repos/estruyf/vscode-front-matter`,
+    apiUrl,
     {
       headers,
     }
