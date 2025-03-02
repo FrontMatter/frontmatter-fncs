@@ -33,7 +33,7 @@ export async function http_sponsors(
             const lastTransaction = new Date(s.lastTransactionAt);
             return lastTransaction >= twoMonthsAgo;
           }
-          return true;
+          return false;
         })
         .map((s: any) => ({
           id: s.MemberId,
