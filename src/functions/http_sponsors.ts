@@ -18,12 +18,23 @@ export async function http_sponsors(
   const ocResponse = await fetch(
     `https://opencollective.com/frontmatter/members.json`
   );
+  const twoMonthsAgo = new Date();
+  twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
+  
   if (ocResponse && ocResponse.ok) {
     const data = await ocResponse.json();
     sponsors = [
       ...sponsors,
       ...data
-        .filter((s: any) => s.role === "BACKER" && s.isActive)
+        .filter((s: any) => {
+          // Check if the backer is active
+          if (s.role === "BACKER" && s.isActive) {
+            // Check if lastTransactionAt is within the last 2 months
+            const lastTransaction = new Date(s.lastTransactionAt);
+            return lastTransaction >= twoMonthsAgo;
+          }
+          return true;
+        })
         .map((s: any) => ({
           id: s.MemberId,
           name: s.name,
